@@ -21,13 +21,13 @@ export default class galaxy
         // Galaxy
 
         this.parameters = {}
-        this.parameters.count = 150000
-        this.parameters.size = 28.5
-        this.parameters.radius = 3.5
+        this.parameters.count = 100000
+        this.parameters.size = 48.5
+        this.parameters.radius = 6
         this.parameters.branches = 7
         this.parameters.spin = 0.1
-        this.parameters.randomness = 0.35
-        this.parameters.randomnessPower = 3
+        this.parameters.randomness = 0.92
+        this.parameters.randomnessPower = 4
         this.parameters.insideColor = '#FF5E19'
         this.parameters.outsideColor = '#5C18D4'
 
@@ -169,5 +169,6 @@ export default class galaxy
         this.points.material.stencilRef = this.stencilRef
         this.points.material.stencilFunc = THREE.EqualStencilFunc
         this.points.material.autoClearColor = false
+        this.parameters.count -= 1
     }
 }

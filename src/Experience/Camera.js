@@ -33,10 +33,10 @@ export default class Camera
         const gridSize = 20
         const divisions = 20
         const gridHelper = new THREE.GridHelper(gridSize, divisions)
-        this.scene.add(gridHelper)
+        // this.scene.add(gridHelper)
 
         this.axisHelper = new THREE.AxesHelper(8)
-        this.scene.add(this.axisHelper)
+        // this.scene.add(this.axisHelper)
 
         // // Debug
 
@@ -58,7 +58,7 @@ export default class Camera
         this.scene.add(this.cameraTest)
 
         this.cameraHelper = new THREE.CameraHelper(this.cameraTest)
-        this.scene.add(this.cameraHelper)
+        // this.scene.add(this.cameraHelper)
 
         // const timeline = gsap.timeline()
         // let animationFinished = false

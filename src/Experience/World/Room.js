@@ -6,10 +6,11 @@ import CoffeeSteam from './CoffeeSteam.js'
 import lights from './lights.js'
 import galaxy from './galaxy.js'
 import Controls from '../World/Controls.js'
+import Screens from './Screens.js'
 
 export default class Room
 {
-    constructor()
+    constructor(_options)
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
@@ -24,6 +25,7 @@ export default class Room
             this.setCoffeeSteam()
             this.setlights()
             this.setGalaxy()
+            this.setScreens()
             this.controls = new Controls()
         })
     }
@@ -31,13 +33,15 @@ export default class Room
     setRoom()
     {
         this.roomModel = {}
+        this.roomModel.group = this.resources.items.room.scene
         this.roomModel.model = this.resources.items.room.scene
         this.roomModel.texture = this.resources.items.baked
         this.roomModel.texture.encoding = THREE.sRGBEncoding
         this.roomModel.texture.flipY = false
         this.roomModel.material = new THREE.MeshBasicMaterial({
             map: this.roomModel.texture,
-            side: THREE.DoubleSide
+            side: THREE.DoubleSide,
+            transparent: true
         })
 
         this.roomModel.model.traverse((child) =>
@@ -76,6 +80,22 @@ export default class Room
         this.galaxy = new galaxy()
     }
 
+    setScreens()
+    {
+        this.leftPcScreen = new Screens(
+            this.roomModel.group.getObjectByName('screenGauche'),
+            '/assets/blender.mp4'
+        )
+        this.rightPcScreen = new Screens(
+            this.roomModel.group.getObjectByName('screenDroite'),
+            '/assets/webflow.mp4'
+        )
+        this.television = new Screens(
+            this.roomModel.group.getObjectByName('screenTele'),
+            '/assets/fireplace.mp4'
+        )
+    }
+
     update()
     {
         if(this.HautChaise)
@@ -89,6 +109,9 @@ export default class Room
 
         if(this.galaxy)
         this.galaxy.update()
+
+        if(this.screens)
+        this.screens.update()
 
         if(this.controls)
         this.controls.update()

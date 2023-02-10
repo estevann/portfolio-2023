@@ -23,7 +23,7 @@ export default class Renderer
         })
         this.instance.physicallyCorrectLights = true
         this.instance.outputEncoding = THREE.sRGBEncoding
-        this.instance.setClearColor('#050200')
+        this.instance.setClearColor('#060606')
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
     }
