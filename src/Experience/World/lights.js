@@ -17,13 +17,13 @@ export default class lights
         // Models
         this.lightsModel = {}
 
-        this.lightsModel.scene = this.resources.items.lights.scene
-        this.scene.add(this.lightsModel.scene)
+        this.lightsModel.group = this.resources.items.lights.scene
+        this.scene.add(this.lightsModel.group)
 
         // Materials
-        this.etagereDroite = this.lightsModel.scene.children[0]
-        this.etagereGauche = this.lightsModel.scene.children[1]
-        this.fenetre = this.lightsModel.scene.children[2]
+        this.etagereDroite = this.lightsModel.group.getObjectByName('emissiveEtagereDroite')
+        this.etagereGauche = this.lightsModel.group.getObjectByName('emissiveEtagereGauche')
+        this.fenetre = this.lightsModel.group.getObjectByName('emissiveFenetre')
 
         this.etagereDroite.material = new THREE.MeshBasicMaterial({color: 'white'})
         this.etagereGauche.material = new THREE.MeshBasicMaterial({color: 'white'})
