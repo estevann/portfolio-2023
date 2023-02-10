@@ -24,11 +24,13 @@ export default class Screens
         this.model = {}
 
         this.model.element = document.createElement("video")
-        this.model.element.muted = false
+        this.model.element.muted = true
         this.model.element.loop = true
+        this.model.element.controls = true
         this.model.element.playsInline = true
         this.model.element.autoplay = true
         this.model.element.src = this.sourcePath
+        this.model.element.play()
 
         this.model.texture = new THREE.VideoTexture(this.model.element)
         this.model.texture.encoding = THREE.sRGBEncoding
@@ -40,6 +42,7 @@ export default class Screens
         
         this.model.mesh = this.mesh
         this.model.mesh.material = this.model.material
+        // this.scene.add(this.model.mesh)
 
 
     }
