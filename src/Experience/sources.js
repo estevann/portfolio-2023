@@ -28,5 +28,20 @@ export default [
         name: 'lights',
         type: 'gltfModel',
         path: 'lights.glb'
+    },
+    {
+        name: 'channel0',
+        type: 'texture',
+        path: 'smoke.jpg'
+    },
+    {
+        name: 'channel2',
+        type: 'texture',
+        path: 'smoke2.jpg'
+    },
+    {
+        name: 'channel1',
+        type: 'texture',
+        path: 'istec.jpg'
     }
 ]

@@ -23,8 +23,8 @@ export default class Camera
         this.instance = new THREE.PerspectiveCamera(
             45,
             this.sizes.width / this.sizes.height,
-            0.01,
-            80
+            0.1,    
+            100
         )
         this.instance.position.set(-1.5, 3.5, -16)
         // this.instance.position.set(9.42, 10.7, 11.81)
@@ -53,7 +53,7 @@ export default class Camera
 
     setCamera()
     {
-        this.cameraTest = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 60)
+        this.cameraTest = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 100)
         this.cameraTest.position.set(-1.5, 3.5, -15)
         this.scene.add(this.cameraTest)
 
@@ -99,10 +99,11 @@ export default class Camera
             this.controls.minPolarAngle = Math.PI * 0.09
             this.controls.maxPolarAngle = Math.PI * 0.45
             this.controls.minDistance = 6
-            // this.controls.maxDistance = 43
-            this.controls.maxDistance = 15
+            this.controls.maxDistance = 43
+            // this.controls.maxDistance = 55
             this.controls.enablePan = true
             // this.controls.enablePan = false
+            this.controls.enableZoom = true
     }
 
     resize()

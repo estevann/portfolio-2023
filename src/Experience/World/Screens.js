@@ -42,9 +42,6 @@ export default class Screens
         
         this.model.mesh = this.mesh
         this.model.mesh.material = this.model.material
-        // this.scene.add(this.model.mesh)
-
-
     }
 
     update()

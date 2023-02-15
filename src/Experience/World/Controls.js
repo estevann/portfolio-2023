@@ -16,6 +16,7 @@ export default class Controls
         this.scene = this.experience.scene
         this.time = this.experience.time
         this.camera = this.experience.camera
+        this.galaxy = this.experience.galaxy
 
 
         this.replacementCurve = new THREE.Vector3(0, 0, 0)
@@ -34,13 +35,35 @@ export default class Controls
 
     fade()
     {
-        // this.overlayGeometry = new THREE.PlaneGeometry(this.sizes.width, this.sizes.height)
-        // this.overlayMaterial = new THREE.ShaderMaterial({
-        //     vertexShader: loaderVertexShader,
-        //     fragmentShader: loaderFragmentShader
-        // })
-        // this.overlay = new THREE.Mesh(this.overlayGeometry, this.overlayMaterial)
-        // this.scene.add(this.overlay)
+        this.channel0 = this.experience.resources.items.channel0
+        this.channel1 = this.experience.resources.items.channel1
+        this.channel2 = this.experience.resources.items.channel2
+
+        this.overlayGeometry = new THREE.PlaneGeometry(2, 2, 16, 16)
+        this.overlayMaterial = new THREE.ShaderMaterial({
+            vertexShader: loaderVertexShader,
+            fragmentShader: loaderFragmentShader,
+            side: THREE.DoubleSide,
+            depthWrite: true,
+            depthTest: true,
+            transparent: true,
+            format: THREE.sRGBEncoding,
+            uniforms: {
+                iCountdown: {value: 1.0 },
+                iDelayTime: {value: 0.1},
+                iTime: {type: 'f', value: 0.1},
+                iChannel0: {type: 't', value : this.channel0},
+                iChannel1: {type: 't', value : this.channel1},
+                iChannel2: {type: 't', value : this.channel2}
+            }
+        })
+        this.overlay = new THREE.Mesh(this.overlayGeometry, this.overlayMaterial)
+        this.overlay.renderOrder = 5
+        this.overlay.frustumCulled = false
+        this.overlayMaterial.uniforms.iChannel0.value.wrapS = this.overlayMaterial.uniforms.iChannel0.value.wrapT = THREE.RepeatWrapping
+        this.overlayMaterial.uniforms.iChannel1.value.wrapS = this.overlayMaterial.uniforms.iChannel1.value.wrapT = THREE.RepeatWrapping
+        this.overlayMaterial.uniforms.iChannel2.value.wrapS = this.overlayMaterial.uniforms.iChannel2.value.wrapT = THREE.RepeatWrapping
+        this.scene.add(this.overlay)
     }
 
     setPath()
@@ -112,9 +135,9 @@ export default class Controls
     update()
     {  
 
-        if(this.progress < 0.02)
+        if(this.progress < 0.01)
         {
-            this.progress += 0.0007
+            this.progress += 0.0002
             this.pathCamera.getPointAt(this.progress + 0.000001, this.replacementCurve)
             this.pathCamera.getPointAt(this.progress, this.lookAt)
 
@@ -122,6 +145,22 @@ export default class Controls
             this.camera.instance.lookAt(this.lookAt)
             this.camera.controls.target.copy(this.lookAt)
             this.camera.controls.enabled = false
+            this.overlayMaterial.uniforms.iDelayTime.value += 0.35
+            this.overlayMaterial.uniforms.iTime.value += this.time.delta * 0.00009
+
+
+        } else if(this.progress >= 0.01 & this.progress < 0.02) {
+
+            this.progress += 0.0007
+            this.pathCamera.getPointAt(this.progress + 0.01, this.replacementCurve)
+            this.pathCamera.getPointAt(this.progress, this.lookAt)
+
+            this.camera.instance.position.copy(this.replacementCurve)
+            this.camera.instance.lookAt(this.lookAt)
+            this.camera.controls.target.copy(this.lookAt)
+            this.camera.controls.enabled = false
+
+            this.overlayMaterial.uniforms.iTime.value += this.time.delta * 0.0003
 
         } else if(this.progress >= 0.02 & this.progress < 0.18) {
 
@@ -134,6 +173,9 @@ export default class Controls
             this.camera.controls.target.copy(this.lookAt)
             this.camera.controls.enabled = false
 
+
+            this.overlayMaterial.uniforms.iTime.value += this.time.delta * 0.0005
+
         } else if(this.progress >= 0.18 & this.progress < 0.98) {
 
             this.progress += 0.007
@@ -144,13 +186,21 @@ export default class Controls
             this.camera.instance.lookAt(this.lookAt)
             this.camera.controls.target.copy(this.lookAt)
             this.camera.controls.enabled = false
-            
+
+            this.overlayMaterial.uniforms.iTime.value += this.time.delta * 0.0006
+            this.overlayMaterial.uniforms.iCountdown.value -= 0.01
 
         } else if(this.progress >= 0.98) {
             gsap.to(this.camera.controls.target, {x:0.4, y: 2.5, z: 2.5, duration: 4.5})
             this.camera.controls.enableZoom = false
             this.camera.controls.enabled = true
+
+            this.overlayMaterial.uniforms.iCountdown.value = 0
         }
+
+
+
+         // A NE PAS RACTIVER APRES SHADERTOY
 
         // this.raycaster.setFromCamera( this.pointer, this.camera.instance)
 	    // this.intersects = this.raycaster.intersectObjects( this.experience.room.roomModel.model.children)
@@ -168,6 +218,6 @@ export default class Controls
         // } else {
 
         // }
-
+        
     }
 }

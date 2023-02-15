@@ -134,7 +134,9 @@ export default class galaxy
         this.stencilBlockRef = 0
 
         this.stencilGeometry = new THREE.BoxGeometry(13, 8.2, 20)
-        this.stencilMaterial = new THREE.MeshStandardMaterial()
+        this.stencilMaterial = new THREE.MeshStandardMaterial({
+            wireframe: true
+        })
         this.stencilBlockMaterial = new THREE.MeshStandardMaterial({
             side: THREE.FrontSide
         })

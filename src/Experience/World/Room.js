@@ -41,6 +41,8 @@ export default class Room
         this.roomModel.material = new THREE.MeshBasicMaterial({
             map: this.roomModel.texture,
             side: THREE.DoubleSide,
+            depthTest: true,
+            depthWrite: true,
             transparent: true
         })
 
@@ -51,7 +53,6 @@ export default class Room
                 child.material = this.roomModel.material
             }
         })
-
         this.scene.add(this.roomModel.model)
     }
 
