@@ -21,7 +21,7 @@ export default class galaxy
         // Galaxy
 
         this.parameters = {}
-        this.parameters.count = 100000
+        this.parameters.count = 40000
         this.parameters.size = 48.5
         this.parameters.radius = 6
         this.parameters.branches = 7
@@ -150,14 +150,14 @@ export default class galaxy
         this.stencilMaterial.stencilZPass = THREE.ReplaceStencilOp
         this.scene.add(this.stencilMesh)
 
-        this.stencilBlock = new THREE.PlaneGeometry(12, 12)
+        this.stencilBlock = new THREE.PlaneGeometry(18, 12)
         this.stencilBlockUp = new THREE.Mesh(this.stencilBlock, this.stencilBlockMaterial)
         this.stencilBlockUp.position.set(0, 11.8, -5)
         this.stencilBlockMaterial.colorWrite = false
         this.stencilBlockMaterial.stencilRef = this.stencilBlockRef
         this.stencilBlockMaterial.stencilZPass = THREE.IncrementWrapStencilOp;
 
-        this.stencilBlock = new THREE.PlaneGeometry(12, 12)
+        this.stencilBlock = new THREE.PlaneGeometry(18, 18)
         this.stencilBlockRight = new THREE.Mesh(this.stencilBlock, this.stencilBlockMaterial)
         this.stencilBlockRight.position.set(10, 6, -5)
 
@@ -171,6 +171,5 @@ export default class galaxy
         this.points.material.stencilRef = this.stencilRef
         this.points.material.stencilFunc = THREE.EqualStencilFunc
         this.points.material.autoClearColor = false
-        this.parameters.count -= 1
     }
 }

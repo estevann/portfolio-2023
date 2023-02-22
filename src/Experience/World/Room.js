@@ -93,7 +93,7 @@ export default class Room
         )
         this.television = new Screens(
             this.roomModel.group.getObjectByName('screenTele'),
-            '/assets/fireplace.mp4'
+            '/assets/repos.mp4'
         )
     }
 

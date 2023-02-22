@@ -19,6 +19,29 @@ export default class Resources extends EventEmitter
         this.toLoad = this.sources.length
         this.loaded = 0
 
+        this.manager = new THREE.LoadingManager()
+
+        this.manager.onStart = () => 
+        {
+            console.log('loading manager started');
+        }
+
+        this.manager.onProgress = (url, loaded, total) =>
+        {
+            console.log(`loading file ${url} + ${loaded} of ${total}`);
+        }
+
+        this.manager.onError = (url) =>
+        {
+            console.log(`error loading ${url}`);
+        }
+
+        this.manager.onLoad = () =>
+        {
+            console.log('loading complete');
+        }
+
+
         this.setLoaders()
         this.startLoading()
     }
@@ -26,17 +49,23 @@ export default class Resources extends EventEmitter
     setLoaders()
     {
         this.loaders = {}
-        this.loaders.gltfLoader = new GLTFLoader()
-        this.loaders.textureLoader = new THREE.TextureLoader()
-        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath( 'draco/' );
-        this.loaders.gltfLoader.setDRACOLoader( dracoLoader );
+        this.loaders.gltfLoader = new GLTFLoader(this.manager)
+        this.loaders.textureLoader = new THREE.TextureLoader(this.manager)
+        this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(this.manager)
+        this.dracoLoader = new DRACOLoader(this.manager);
+        this.dracoLoader.setDecoderPath( 'draco/' );
+        this.loaders.gltfLoader.setDRACOLoader( this.dracoLoader );
+
+
+
     }
 
 
     startLoading()
     {
+
+
+
         for(const source of this.sources)
         {
             if(source.type === 'gltfModel')
@@ -79,13 +108,14 @@ export default class Resources extends EventEmitter
 
     sourceLoaded(source, file)
     {
+
+
         this.items[source.name] = file
 
         this.loaded++
 
         if(this.loaded === this.toLoad)
         {
-            console.log('Fichiers chargés');
             this.trigger('ready')
         }
     }

@@ -99,7 +99,7 @@ export default class Camera
             this.controls.minPolarAngle = Math.PI * 0.09
             this.controls.maxPolarAngle = Math.PI * 0.45
             this.controls.minDistance = 6
-            this.controls.maxDistance = 43
+            this.controls.maxDistance = 23
             // this.controls.maxDistance = 55
             this.controls.enablePan = true
             // this.controls.enablePan = false
